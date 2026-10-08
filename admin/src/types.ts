@@ -98,6 +98,9 @@ export type Stats = {
     status: FeedbackStatus;
     created_at: string;
   }>;
+  categories: Record<FeedbackCategory, number>;
+  /** 管理员可见。一人可计入多个类别，未填写类别记为「未分类」。 */
+  personTags?: Array<{ name: string; value: number }>;
 };
 
 export const statusLabel: Record<FeedbackStatus, string> = {

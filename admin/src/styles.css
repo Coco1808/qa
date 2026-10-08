@@ -133,6 +133,21 @@ body {
   margin-bottom: 16px;
 }
 
+.chart-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.chart-span {
+  grid-column: 1 / -1;
+}
+
+.chart-box {
+  height: 320px;
+}
+
 .admin-shell {
   min-height: 100vh;
   width: 100%;
@@ -324,6 +339,12 @@ body {
   }
 
   .person-form-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 800px) {
+  .chart-grid {
     grid-template-columns: 1fr;
   }
 }

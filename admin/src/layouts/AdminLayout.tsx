@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Navigate, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { Avatar, Button, Drawer, Dropdown, Grid, Layout, Menu, Spin } from "antd";
-import { DashboardOutlined, IdcardOutlined, LogoutOutlined, MenuOutlined, TeamOutlined } from "@ant-design/icons";
+import { DashboardOutlined, IdcardOutlined, LogoutOutlined, MenuOutlined, PieChartOutlined, TeamOutlined } from "@ant-design/icons";
 import { api, clearSession, getToken, getUser } from "../api";
 import type { SessionUser } from "../types";
 
@@ -48,6 +48,7 @@ export default function AdminLayout() {
   if (!user) return <Navigate to="/login" replace />;
 
   const items = [
+    { key: "/overview", icon: <PieChartOutlined />, label: "概览" },
     { key: "/", icon: <DashboardOutlined />, label: "反馈管理" },
     ...(user.role === "admin"
       ? [
