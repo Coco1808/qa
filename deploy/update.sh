@@ -2,16 +2,7 @@
 set -euo pipefail
 
 cd /opt/qa
-
-if ! swapon --show | grep -q /swapfile; then
-  if [ ! -f /swapfile ]; then
-    dd if=/dev/zero of=/swapfile bs=1M count=2048 status=progress
-    chmod 600 /swapfile
-    mkswap /swapfile
-  fi
-  swapon /swapfile || true
-  grep -q '/swapfile' /etc/fstab || echo '/swapfile none swap sw 0 0' >> /etc/fstab
-fi
+echo "开始部署 $(date)"
 
 npm config set registry https://registry.npmmirror.com
 
