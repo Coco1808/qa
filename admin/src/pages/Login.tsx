@@ -16,10 +16,10 @@ export default function Login() {
       <section className="login-hero">
         <div className="brand-mark">问</div>
         <div>
-          <h1>只让指定人员看到用户反馈</h1>
-          <p>用户扫码提交问题后，内容只进入后台。账号可以启用、停用，停用后立即不能登录。</p>
+          <h1>人员信息+ 问题反馈</h1>
+          <p>让生活便捷，让管理高效</p>
         </div>
-        <div>扫码点位 · 反馈处理 · 账号控制</div>
+        {/* <div>扫码点位 · 反馈处理 · 账号控制</div> */}
       </section>
       <section className="login-panel">
         <div className="login-card">
@@ -54,11 +54,11 @@ export default function Login() {
               登录
             </Button>
           </Form>
-          <div className="account-tip">
+          {/* <div className="account-tip">
             初始管理员 admin / Admin@123
             <br />
             初始值班账号 staff / Staff@123
-          </div>
+          </div> */}
         </div>
       </section>
     </div>

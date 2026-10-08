@@ -4,6 +4,7 @@ import { App, Avatar, Button, DatePicker, Form, Input, Modal, Popconfirm, Select
 import { QRCodeSVG } from "qrcode.react";
 import dayjs, { type Dayjs } from "dayjs";
 import { api, downloadFile, getUser, uploadFile } from "../api";
+import { downloadPersonnelQrZip } from "../personnelQr";
 import { avatarSrc, personLink, personTagOptions, type PersonnelItem } from "../types";
 
 type PersonnelForm = {
@@ -130,6 +131,7 @@ export default function Personnel() {
   const [qrPerson, setQrPerson] = useState<PersonnelItem | null>(null);
   const [importing, setImporting] = useState(false);
   const [exporting, setExporting] = useState(false);
+  const [packing, setPacking] = useState(false);
   const [draft, setDraft] = useState<PersonFilters>(emptyFilters);
   const [applied, setApplied] = useState<PersonFilters>(emptyFilters);
   const [form] = Form.useForm<PersonnelForm>();
@@ -215,7 +217,7 @@ export default function Personnel() {
       <div className="page-heading">
         <div>
           <h2>人员信息</h2>
-          <p>可按姓名、身份证号、电话、人员类别等模糊筛选。导入和导出只支持 Excel（.xlsx）。</p>
+          <p>可按姓名、身份证号、电话、人员类别等模糊筛选。导入和导出只支持 Excel（.xlsx）。可一键下载全部人员的姓名和二维码。</p>
         </div>
         <div className="heading-actions">
           <Upload
@@ -274,6 +276,31 @@ export default function Personnel() {
             }}
           >
             导出 Excel
+          </Button>
+          <Button
+            loading={packing}
+            onClick={async () => {
+              if (getUser()?.role !== "admin") {
+                message.error("只有管理员可以下载");
+                return;
+              }
+              setPacking(true);
+              try {
+                const all = await api<PersonnelItem[]>("/api/personnel");
+                if (!all.length) {
+                  message.warning("暂无人员");
+                  return;
+                }
+                await downloadPersonnelQrZip(all);
+                message.success(`已下载 ${all.length} 人的姓名和二维码`);
+              } catch (error) {
+                message.error(error instanceof Error ? error.message : "下载失败");
+              } finally {
+                setPacking(false);
+              }
+            }}
+          >
+            下载全部二维码
           </Button>
           <Button type="primary" onClick={() => openEditor(null)}>
             新建人员

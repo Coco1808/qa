@@ -12,13 +12,16 @@
     "@ant-design/icons": "^5.6.1",
     "antd": "^5.27.4",
     "dayjs": "^1.11.18",
+    "jszip": "^3.10.2",
     "qa-feedback": "file:..",
+    "qrcode": "^1.5.4",
     "qrcode.react": "^4.2.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^7.9.3"
   },
   "devDependencies": {
+    "@types/qrcode": "^1.5.6",
     "@types/react": "^18.3.24",
     "@types/react-dom": "^18.3.7",
     "@vitejs/plugin-react": "^4.7.0",

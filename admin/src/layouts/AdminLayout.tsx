@@ -77,7 +77,7 @@ export default function AdminLayout() {
           <div className="sider-brand">
             <div className="brand-mark sider-mark">问</div>
             <div>
-              <div className="sider-title">问题反馈</div>
+              <div className="sider-title">人员信息 + 问题反馈</div>
               <div className="sider-subtitle">后台管理</div>
             </div>
           </div>
@@ -90,7 +90,7 @@ export default function AdminLayout() {
             {compact && (
               <Button type="text" icon={<MenuOutlined />} aria-label="打开菜单" onClick={() => setMenuOpen(true)} />
             )}
-            {compact && <strong>问题反馈</strong>}
+            {compact && <strong>人员信息+ 问题反馈</strong>}
           </div>
           <Dropdown
             menu={{
@@ -113,7 +113,7 @@ export default function AdminLayout() {
         </Content>
       </Layout>
       <Drawer
-        title="问题反馈"
+        title="人员信息+ 问题反馈"
         placement="left"
         width={280}
         open={compact && menuOpen}
