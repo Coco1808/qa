@@ -2,6 +2,17 @@
 set -euo pipefail
 
 cd /opt/qa
+
+if ! swapon --show | grep -q /swapfile; then
+  if [ ! -f /swapfile ]; then
+    dd if=/dev/zero of=/swapfile bs=1M count=2048 status=progress
+    chmod 600 /swapfile
+    mkswap /swapfile
+  fi
+  swapon /swapfile || true
+  grep -q '/swapfile' /etc/fstab || echo '/swapfile none swap sw 0 0' >> /etc/fstab
+fi
+
 npm config set registry https://registry.npmmirror.com
 
 if docker compose version >/dev/null 2>&1; then
