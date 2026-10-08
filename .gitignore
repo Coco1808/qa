@@ -1,0 +1,9 @@
+node_modules
+dist
+.next
+unpackage
+*.log
+.DS_Store
+*.local
+server/.env
+server/data/avatars/*

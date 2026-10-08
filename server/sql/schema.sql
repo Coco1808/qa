@@ -1,0 +1,73 @@
+CREATE TABLE IF NOT EXISTS users (
+  id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  username VARCHAR(50) NOT NULL,
+  password_hash VARCHAR(255) NOT NULL,
+  display_name VARCHAR(50) NOT NULL,
+  role ENUM('admin', 'staff') NOT NULL DEFAULT 'staff',
+  status TINYINT NOT NULL DEFAULT 1,
+  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (id),
+  UNIQUE KEY uk_users_username (username)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS qr_points (
+  id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  code VARCHAR(32) NOT NULL,
+  name VARCHAR(100) NOT NULL,
+  location VARCHAR(200) NOT NULL DEFAULT '',
+  description VARCHAR(500) NOT NULL DEFAULT '',
+  status TINYINT NOT NULL DEFAULT 1,
+  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (id),
+  UNIQUE KEY uk_points_code (code)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS personnel (
+  id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  code VARCHAR(32) NOT NULL,
+  name VARCHAR(50) NOT NULL,
+  gender VARCHAR(10) NOT NULL DEFAULT '',
+  id_card VARCHAR(18) NOT NULL DEFAULT '',
+  birth_date DATE NULL,
+  ethnicity VARCHAR(30) NOT NULL DEFAULT '',
+  household_address VARCHAR(200) NOT NULL DEFAULT '',
+  residence_address VARCHAR(200) NOT NULL DEFAULT '',
+  phone VARCHAR(30) NOT NULL DEFAULT '',
+  household_no VARCHAR(50) NOT NULL DEFAULT '',
+  education VARCHAR(30) NOT NULL DEFAULT '',
+  marital_status VARCHAR(20) NOT NULL DEFAULT '',
+  health_status VARCHAR(50) NOT NULL DEFAULT '',
+  employment_status VARCHAR(50) NOT NULL DEFAULT '',
+  work_location VARCHAR(200) NOT NULL DEFAULT '',
+  insurance_status VARCHAR(100) NOT NULL DEFAULT '',
+  tags VARCHAR(255) NOT NULL DEFAULT '',
+  remark VARCHAR(500) NOT NULL DEFAULT '',
+  info_date DATE NULL,
+  collector VARCHAR(50) NOT NULL DEFAULT '',
+  avatar VARCHAR(255) NOT NULL DEFAULT '',
+  status TINYINT NOT NULL DEFAULT 1,
+  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (id),
+  UNIQUE KEY uk_personnel_code (code)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS feedbacks (
+  id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  reporter_name VARCHAR(50) NOT NULL,
+  reporter_phone VARCHAR(30) NOT NULL DEFAULT '',
+  reporter_address VARCHAR(200) NOT NULL DEFAULT '',
+  category ENUM('suggestion', 'complaint', 'fault', 'other') NOT NULL DEFAULT 'other',
+  content TEXT NOT NULL,
+  status ENUM('pending', 'processing', 'resolved', 'closed') NOT NULL DEFAULT 'pending',
+  reply TEXT NULL,
+  handler_id INT UNSIGNED NULL,
+  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (id),
+  KEY idx_feedbacks_status (status),
+  KEY idx_feedbacks_created (created_at),
+  CONSTRAINT fk_feedback_handler FOREIGN KEY (handler_id) REFERENCES users (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

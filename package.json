@@ -1,0 +1,11 @@
+{
+  "name": "qa-feedback",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently -n server,admin -c blue,green \"npm --prefix server run dev\" \"npm --prefix admin run dev\"",
+    "db:init": "npm --prefix server run db:init"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}
