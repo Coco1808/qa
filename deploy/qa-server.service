@@ -1,0 +1,14 @@
+[Unit]
+Description=QA feedback server
+After=network.target docker.service
+Requires=docker.service
+
+[Service]
+WorkingDirectory=/opt/qa/server
+Environment=NODE_ENV=production
+ExecStart=/opt/qa/server/node_modules/.bin/next start -H 127.0.0.1 -p 3000
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

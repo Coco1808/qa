@@ -1,0 +1,19 @@
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to Aliyun
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        run: |
+          mkdir -p ~/.ssh
+          printf '%s\n' "$SSH_PRIVATE_KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -H 47.116.30.86 >> ~/.ssh/known_hosts
+          ssh -i ~/.ssh/id_ed25519 root@47.116.30.86 'cd /opt/qa && git -c safe.directory=/opt/qa fetch origin main && git -c safe.directory=/opt/qa reset --hard origin/main && bash deploy/update.sh'
